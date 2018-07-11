@@ -22,27 +22,31 @@ def MCTS(model, state):
 def best_shot_parm(prob):
     index = prob
 
-    if prob - 1024 <= 0:
+    if prob - 1024 < 0:
         turn = 0
     else:
         turn = 1
 
-    rows = 0
-    tmp = index
-    while True:
+    if turn == 1:
+        rows = 0
+        tmp = index-1024
 
-        tmp = tmp - 32
+        rows = tmp // 32
 
-        if tmp < 0:
-            break
-        else:
-            rows += 1
+        cols = (index-1024) - rows * 32
 
-    cols = index - rows * 32
+    else:
+        rows = 0
+        tmp = index
 
-    x = 4.75 / 32 * cols
-    y = 11.28 / 32 * rows
+        rows = tmp // 32
+        print(rows)
+        cols = index - rows * 32
+
+    x = 4.75 / 31 * cols
+    y = 11.28 / 31 * rows
     return [x, y, turn]
+
 
 
 def coordinates_to_plane(coordinates):
